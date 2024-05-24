@@ -25,6 +25,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    z-index: 10;
+    margin-top: 10px;
 }
 
 .icon {
@@ -39,6 +41,7 @@ body {
     font-size: 35px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     padding-left: 20px;
+    padding-top: 15px;
     letter-spacing: 1px;
     float: left;
 }
@@ -47,6 +50,7 @@ body {
     width: 400px;
     float: left;
     height: 70px;
+    text-align: center;
 }
 
 .menu ul {
@@ -76,8 +80,8 @@ body {
 }
 
 .search {
-    width: 400px;
-    float: left;
+    width: calc(100% - 600px);;
+    float: right;
     margin-left: 280px;
 }
 
@@ -93,8 +97,8 @@ body {
     font-size: 16px;
     float: left;
     padding: 10px;
-    border-bottom-left-radius: 5px;
-    border-top-left-radius: 5px;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
 }
 
 .btnSrch {
@@ -104,13 +108,11 @@ body {
     border: 2px solid #0488A1;
     margin-top: 13px;
     color: white;
-    border-right: none;
+    border-left: none;
     font-size: 16px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    float: left;
-    padding: 10px;
-    border-bottom-left-radius: 5px;
-    border-top-left-radius: 5px;
+    padding: 5px;
+
     text-align: center;
 }
 
@@ -127,15 +129,13 @@ body {
     height: 30px;
     background: #0488A1;
     border: 2px solid #0488A1;
-    margin-top: 13px;
     color: white;
-    border-right: none;
+    border-left: none;
     font-size: 16px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    float: left;
-    padding: 10px;
-    border-bottom-left-radius: 5px;
-    border-top-left-radius: 5px;
+    padding: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
     text-align: center;
 }
  
@@ -147,13 +147,14 @@ body {
     width: 1200px;
     height: auto;
     margin: auto;
-    color: #FFBA7D;
     position: relative;
+    color: #FFBA7D;
 }
 
 .context h2 {
-    padding-left: 20px;
-    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-bottom: 20px;
+    padding-top: 20px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     letter-spacing: 1.2px;
     line-height: 30px;
@@ -164,6 +165,23 @@ body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 50px;
     padding-left: 50px;
-    margin-top: 9px;
+    margin-top: 50px;
     letter-spacing: 2px;
+    text-align: left;
+}
+
+.bookBtn {
+    width: 160px;
+    height: 40px;
+    background: rgba(255, 186, 125, 0.8);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: white;
+    text-decoration: none;
+    border: 2px solid rgba(255, 186, 125, 0.8);
+    text-align: center;
+    margin-left: 50px;
+}
+
+.bookBtn:focus {
+    outline: none;
 }
