@@ -2,6 +2,12 @@ const searchBtn = document.getElementById("btnSearch");
 const resetBtn = document.getElementById("btnReset");
 const resultDiv = document.getElementById('result');
 
+// Arrays to keep track of displayed items
+let displayedCities = [];
+let displayedCountries = [];
+let displayedTemples = [];
+let displayedBeaches = [];
+
 function searchPlace() {
     console.log('Search button clicked'); // Debugging line
     resultDiv.innerHTML = '';
@@ -13,26 +19,57 @@ function searchPlace() {
 
         if (input === "country" || input === "countries") {
             found = true;
-            data.countries.forEach(country => {
-                country.cities.forEach(city => displayCity(city));
-            });
+            if (!displayedCountries.length) {
+                data.countries.forEach(country => {
+                    country.cities.forEach(city => {
+                        if (!displayedCities.includes(city.name.toLowerCase())) {
+                            displayCity(city);
+                            displayedCities.push(city.name.toLowerCase());
+                        }
+                    });
+                });
+                displayedCountries = data.countries.map(country => country.name.toLowerCase());
+            }
         } else if (input === "city" || input === "cities") {
             found = true;
-            data.countries.forEach(country => {
-                country.cities.forEach(city => displayCity(city));
-            });
+            if (!displayedCities.length) {
+                data.countries.forEach(country => {
+                    country.cities.forEach(city => {
+                        displayCity(city);
+                        displayedCities.push(city.name.toLowerCase());
+                    });
+                });
+            }
         } else if (input === "temple" || input === "temples") {
             found = true;
-            data.temples.forEach(temple => displayTemple(temple));
+            if (!displayedTemples.length) {
+                data.temples.forEach(temple => {
+                    displayTemple(temple);
+                    displayedTemples.push(temple.name.toLowerCase());
+                });
+            }
         } else if (input === "beach" || input === "beaches") {
             found = true;
-            data.beaches.forEach(beach => displayBeach(beach));
+            if (!displayedBeaches.length) {
+                data.beaches.forEach(beach => {
+                    displayBeach(beach);
+                    displayedBeaches.push(beach.name.toLowerCase());
+                });
+            }
         } else {
             // Search for countries
             for (const country of data.countries) {
-                if (country.name.toLowerCase() === input || country.name.toLowerCase().includes(input)) {
+                if (country.name.toLowerCase().includes(input)) {
                     found = true;
-                    country.cities.forEach(city => displayCity(city));
+                    if (!displayedCountries.includes(country.name.toLowerCase())) {
+                        displayedCountries.push(country.name.toLowerCase());
+                        country.cities.forEach(city => {
+                            if (!displayedCities.includes(city.name.toLowerCase())) {
+                                displayCity(city);
+                                displayedCities.push(city.name.toLowerCase());
+                            }
+                        });
+                    }
                     break; // Exit the loop once a country is found
                 }
             }
@@ -41,9 +78,12 @@ function searchPlace() {
             if (!found) {
                 for (const country of data.countries) {
                     for (const city of country.cities) {
-                        if (city.name.toLowerCase() === input || city.name.toLowerCase().includes(input)) {
-                            displayCity(city);
+                        if (city.name.toLowerCase().includes(input)) {
                             found = true;
+                            if (!displayedCities.includes(city.name.toLowerCase())) {
+                                displayCity(city);
+                                displayedCities.push(city.name.toLowerCase());
+                            }
                             break; // Exit the loop once a city is found
                         }
                     }
@@ -51,26 +91,26 @@ function searchPlace() {
                 }
             }
 
-            // If still no match is found, search for temples
+            // If still no match is found, search for individual temples
             if (!found) {
-                for (const temple of data.temples) {
-                    if (temple.name.toLowerCase() === input || temple.name.toLowerCase().includes(input)) {
-                        displayTemple(temple);
+                data.temples.forEach(temple => {
+                    if (temple.name.toLowerCase().includes(input)) {
                         found = true;
-                        break; // Exit the loop once a temple is found
+                        displayTemple(temple);
+                        displayedTemples.push(temple.name.toLowerCase());
                     }
-                }
+                });
             }
 
-            // If still no match is found, search for beaches
+            // If still no match is found, search for individual beaches
             if (!found) {
-                for (const beach of data.beaches) {
-                    if (beach.name.toLowerCase() === input || beach.name.toLowerCase().includes(input)) {
-                        displayBeach(beach);
+                data.beaches.forEach(beach => {
+                    if (beach.name.toLowerCase().includes(input)) {
                         found = true;
-                        break; // Exit the loop once a beach is found
+                        displayBeach(beach);
+                        displayedBeaches.push(beach.name.toLowerCase());
                     }
-                }
+                });
             }
         }
 
@@ -103,28 +143,41 @@ function displayCity(city) {
 
 function displayTemple(temple) {
     console.log("Displaying temple:", temple.name); // Debugging line
-    resultDiv.innerHTML += `
-        <div class="result-item">
-            <img src="${temple.imageUrl}" alt="${temple.name} Image" class="result-image">
-            <h2 class="result-title">${temple.name}</h2>
-            <p class="result-description">${temple.description}</p>
-        </div>`;
+    if (!displayedTemples.includes(temple.name.toLowerCase())) {
+        resultDiv.innerHTML += `
+            <div class="result-item">
+                <img src="${temple.imageUrl}" alt="${temple.name} Image" class="result-image">
+                <h2 class="result-title">${temple.name}</h2>
+                <p class="result-description">${temple.description}</p>
+            </div>`;
+        displayedTemples.push(temple.name.toLowerCase());
+    }
 }
 
 function displayBeach(beach) {
     console.log("Displaying beach:", beach.name); // Debugging line
-    resultDiv.innerHTML += `
-        <div class="result-item">
-            <img src="${beach.imageUrl}" alt="${beach.name} Image" class="result-image">
-            <h2 class="result-title">${beach.name}</h2>
-            <p class="result-description">${beach.description}</p>
-        </div>`;
+    if (!displayedBeaches.includes(beach.name.toLowerCase())) {
+        resultDiv.innerHTML += `
+            <div class="result-item">
+                <img src="${beach.imageUrl}" alt="${beach.name} Image" class="result-image">
+                <h2 class="result-title">${beach.name}</h2>
+                <p class="result-description">${beach.description}</p>
+            </div>`;
+        displayedBeaches.push(beach.name.toLowerCase());
+    }
 }
+
 
 function clearResults() {
     resultDiv.innerHTML = '';
     // Hide the result window on reset
     resultDiv.style.display = 'none';
+
+    // Clear displayed items arrays
+    displayedCities = [];
+    displayedCountries = [];
+    displayedTemples = [];
+    displayedBeaches = [];
 }
 
 function getTimeZone(country) {
@@ -144,7 +197,7 @@ function getTimeZone(country) {
       };
       return new Date().toLocaleTimeString('en-US', options);
     }
-  }
+}
 
 searchBtn.addEventListener('click', searchPlace);
 resetBtn.addEventListener('click', clearResults);
