@@ -90,9 +90,11 @@ function searchPlace() {
 }
 
 function displayCity(city) {
-    console.log("Displaying city:", city.name); // Debugging line
+    const country = city.name.split(', ')[1];
+    const timeZone = getTimeZone(country);    
     resultDiv.innerHTML += `
         <div class="result-item">
+            <p class="result-time">Local time in ${city.name}: ${timeZone}</p>
             <img src="${city.imageUrl}" alt="${city.name} Image" class="result-image">
             <h2 class="result-title">${city.name}</h2>
             <p class="result-description">${city.description}</p>
@@ -124,6 +126,25 @@ function clearResults() {
     // Hide the result window on reset
     resultDiv.style.display = 'none';
 }
+
+function getTimeZone(country) {
+    const timezones = {
+      Australia: `Australia/Sydney`,
+      Brazil: 'America/Sao_Paulo',
+      Japan: 'Asia/Tokyo',
+      India: 'Asia/Kolkata',
+    };
+    if (timezones[country]) {
+      const options = {
+        timeZone: timezones[country],
+        hour12: true,
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+      };
+      return new Date().toLocaleTimeString('en-US', options);
+    }
+  }
 
 searchBtn.addEventListener('click', searchPlace);
 resetBtn.addEventListener('click', clearResults);
