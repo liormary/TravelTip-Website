@@ -37,7 +37,7 @@ function searchPlace() {
                     country.cities.forEach(city => {
                         displayCity(city);
                         displayedCities.push(city.name.toLowerCase());
-                    });
+                    }); 
                 });
             }
         } else if (input === "temple" || input === "temples") {
