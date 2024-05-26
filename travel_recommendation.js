@@ -125,7 +125,5 @@ function clearResults() {
     resultDiv.style.display = 'none';
 }
 
-
-// Add event listeners
 searchBtn.addEventListener('click', searchPlace);
 resetBtn.addEventListener('click', clearResults);
