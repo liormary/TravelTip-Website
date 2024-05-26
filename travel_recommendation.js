@@ -3,61 +3,80 @@ const resetBtn = document.getElementById("btnReset");
 const resultDiv = document.getElementById('result');
 
 function searchPlace() {
+    console.log('Search button clicked'); // Debugging line
     resultDiv.innerHTML = '';
     fetch('travel_recommendation_api.json')
     .then(response => response.json())
     .then(data => {
-        const input = document.getElementById('placeInput').value.toLowerCase(); // Correct the input field ID
+        const input = document.getElementById('placeInput').value.toLowerCase().trim();
         let found = false;
 
-        // Search for countries
-        for (const country of data.countries) {
-            if (country.name.toLowerCase() === input || country.name.toLowerCase().includes(input)) {
+        if (input === "country" || input === "countries") {
+            found = true;
+            data.countries.forEach(country => {
                 country.cities.forEach(city => displayCity(city));
-                found = true;
-                break; // Exit the loop once a country is found
-            }
-        }
-
-        // If no country match is found, search for cities, temples, and beaches
-        if (!found) {
-            // Search for cities
+            });
+        } else if (input === "city" || input === "cities") {
+            found = true;
+            data.countries.forEach(country => {
+                country.cities.forEach(city => displayCity(city));
+            });
+        } else if (input === "temple" || input === "temples") {
+            found = true;
+            data.temples.forEach(temple => displayTemple(temple));
+        } else if (input === "beach" || input === "beaches") {
+            found = true;
+            data.beaches.forEach(beach => displayBeach(beach));
+        } else {
+            // Search for countries
             for (const country of data.countries) {
-                for (const city of country.cities) {
-                    if (city.name.toLowerCase() === input) {
-                        displayCity(city);
+                if (country.name.toLowerCase() === input || country.name.toLowerCase().includes(input)) {
+                    found = true;
+                    country.cities.forEach(city => displayCity(city));
+                    break; // Exit the loop once a country is found
+                }
+            }
+
+            // If no country match is found, search for cities directly
+            if (!found) {
+                for (const country of data.countries) {
+                    for (const city of country.cities) {
+                        if (city.name.toLowerCase() === input || city.name.toLowerCase().includes(input)) {
+                            displayCity(city);
+                            found = true;
+                            break; // Exit the loop once a city is found
+                        }
+                    }
+                    if (found) break; // Exit the loop once a city is found
+                }
+            }
+
+            // If still no match is found, search for temples
+            if (!found) {
+                for (const temple of data.temples) {
+                    if (temple.name.toLowerCase() === input || temple.name.toLowerCase().includes(input)) {
+                        displayTemple(temple);
                         found = true;
-                        break; // Exit the loop once a city is found
+                        break; // Exit the loop once a temple is found
                     }
                 }
-                if (found) break; // Exit the loop once a city is found
             }
-        }
 
-        if (!found) {
-            // Search for temples
-            for (const temple of data.temples) {
-                if (temple.name.toLowerCase() === input) {
-                    displayTemple(temple);
-                    found = true;
-                    break; // Exit the loop once a temple is found
-                }
-            }
-        }
-
-        if (!found) {
-            // Search for beaches
-            for (const beach of data.beaches) {
-                if (beach.name.toLowerCase() === input || beach.name.toLowerCase().includes(input)) {
-                    displayBeach(beach);
-                    found = true;
-                    break; // Exit the loop once a beach is found
+            // If still no match is found, search for beaches
+            if (!found) {
+                for (const beach of data.beaches) {
+                    if (beach.name.toLowerCase() === input || beach.name.toLowerCase().includes(input)) {
+                        displayBeach(beach);
+                        found = true;
+                        break; // Exit the loop once a beach is found
+                    }
                 }
             }
         }
 
         // If no match is found
         if (!found) {
+            console.log("Place not found"); // Debugging line
             resultDiv.innerHTML = 'Place not found.';
         }
 
@@ -71,6 +90,7 @@ function searchPlace() {
 }
 
 function displayCity(city) {
+    console.log("Displaying city:", city.name); // Debugging line
     resultDiv.innerHTML += `
         <div class="result-item">
             <img src="${city.imageUrl}" alt="${city.name} Image" class="result-image">
@@ -80,6 +100,7 @@ function displayCity(city) {
 }
 
 function displayTemple(temple) {
+    console.log("Displaying temple:", temple.name); // Debugging line
     resultDiv.innerHTML += `
         <div class="result-item">
             <img src="${temple.imageUrl}" alt="${temple.name} Image" class="result-image">
@@ -89,6 +110,7 @@ function displayTemple(temple) {
 }
 
 function displayBeach(beach) {
+    console.log("Displaying beach:", beach.name); // Debugging line
     resultDiv.innerHTML += `
         <div class="result-item">
             <img src="${beach.imageUrl}" alt="${beach.name} Image" class="result-image">
@@ -97,12 +119,13 @@ function displayBeach(beach) {
         </div>`;
 }
 
-
 function clearResults() {
     resultDiv.innerHTML = '';
     // Hide the result window on reset
     resultDiv.style.display = 'none';
 }
 
+
+// Add event listeners
 searchBtn.addEventListener('click', searchPlace);
 resetBtn.addEventListener('click', clearResults);
