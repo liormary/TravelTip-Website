@@ -18,10 +18,11 @@
                 </ul>
             </div>
             <div class= "search">
-                <input class = "srch" type="text" id="destenationInput" placeholder="Enter a destenation"> 
-                <button class= "btnSrch" id='btnSearch'>Search</button>
-                <button class= "btnRst" id='btnReset'>Reset</button>
-            </div>
+                <input class = "srch" type="text" id="placeInput" placeholder="Enter a destenation"> 
+                <button onclick="searchPlace()" class= "btnSrch" id='btnSearch'>Search</button>
+                <button onclick="clearResults()" class= "btnRst" id='btnReset'>Reset</button>
+            </div> 
+            <div class= "result-window" id="result"></div>
         </div>
 
         <div class= "context">
@@ -35,7 +36,9 @@
         </div>
     </div> 
     
+   
 
+    <script src="travel_recommendation.js"></script>
    
 </body>
 </html>
