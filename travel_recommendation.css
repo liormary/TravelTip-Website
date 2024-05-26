@@ -193,3 +193,59 @@ body {
 .bookBtn:focus {
     outline: none;
 }
+
+.contactForm {
+    max-width: 500px;
+}
+
+.contactForm h1 {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 50px;
+    padding-left: 80px;
+    margin-top: 50px;
+    letter-spacing: 2px;
+    text-align: left;
+    color: #f8a55d;
+}
+
+.contactForm h2 {
+    padding-left: 80px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    letter-spacing: 1.2px;
+    line-height: 30px;
+    font-size: medium;
+    color: #f8a55d;
+}
+
+.contactForm label {
+    color: #f8a55d;
+    font-weight: bold;
+    padding-left: 80px;
+    padding-bottom: 10px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: medium;
+}
+  
+.contactForm input {
+    margin-left: 80px;
+    width: 400px;
+    margin-bottom: 15px;
+    padding: 8px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(255, 186, 125, 0.8);
+}
+  
+.contactForm button {
+    width: 100px;
+    height: 40px;
+    background: rgba(255, 186, 125, 0.8);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: white;
+    text-decoration: none;
+    border: 2px solid rgba(255, 186, 125, 0.8);
+    text-align: center;
+    margin-left:80px;
+}
+

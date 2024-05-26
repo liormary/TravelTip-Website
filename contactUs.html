@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>TravelTip</title>
+  <meta charset="UTF-8">
+  <title>Contact Us</title>
   <link rel="stylesheet" href="./travel_recommendation.css">
-</head>
+ </head>
 <body>
     <div class = "main">
         <div class = "navbar">
@@ -23,20 +24,27 @@
                 <button class= "btnRst" id='btnReset'>Reset</button>
             </div>
         </div>
+        <div class= "contactForm">
+            <h1>Contact Us</h1>
+            <h2>Feel free to contact us to know more.</h2>
 
-        <div class= "context">
-             <h1>Explore Dream Destination<br></h1>
-             <h2>It encourages exploration of unfamiliar <br>
-                territories, embracing diverse cultures and<br>
-                landspaces, while pursuing the desierd<br>
-                destination that captivates the heart and<br>
-                ignites a sense of wonder. </h2>
-            <button class = "bookBtn">BOOK NOW</a></button>
+            <form id="form">
+            <div>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            </div>
+            <button type="submit" onclick="thankyou()">Submit</button>
+            </form>
         </div>
     </div> 
-    
-
-   
+  <script>
+    function thankyou(){
+        alert('Thank you for contacting us!')
+    }
+  </script>
 </body>
 </html>
-
