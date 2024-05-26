@@ -7,54 +7,53 @@ function searchPlace() {
     fetch('travel_recommendation_api.json')
     .then(response => response.json())
     .then(data => {
-        const input = document.getElementById('placeInput').value.toLowerCase();
+        const input = document.getElementById('placeInput').value.toLowerCase(); // Correct the input field ID
         let found = false;
 
         // Search for countries
-        data.countries.forEach(country => {
+        for (const country of data.countries) {
             if (country.name.toLowerCase() === input || country.name.toLowerCase().includes(input)) {
-                // Display all cities in the country
-                country.cities.forEach(city => {
-                    displayCity(city);
-                });
+                country.cities.forEach(city => displayCity(city));
                 found = true;
-                return; // Exit the loop once a country is found
+                break; // Exit the loop once a country is found
             }
-        });
+        }
 
         // If no country match is found, search for cities, temples, and beaches
         if (!found) {
             // Search for cities
-            data.countries.forEach(country => {
-                country.cities.forEach(city => {
+            for (const country of data.countries) {
+                for (const city of country.cities) {
                     if (city.name.toLowerCase() === input) {
-                        // Process city data
                         displayCity(city);
                         found = true;
-                        return; // Exit the loop once a city is found
+                        break; // Exit the loop once a city is found
                     }
-                });
-            });
+                }
+                if (found) break; // Exit the loop once a city is found
+            }
+        }
 
+        if (!found) {
             // Search for temples
-            data.temples.forEach(temple => {
+            for (const temple of data.temples) {
                 if (temple.name.toLowerCase() === input) {
-                    // Process temple data
                     displayTemple(temple);
                     found = true;
-                    return; // Exit the loop once a temple is found
+                    break; // Exit the loop once a temple is found
                 }
-            });
+            }
+        }
 
+        if (!found) {
             // Search for beaches
-            data.beaches.forEach(beach => {
+            for (const beach of data.beaches) {
                 if (beach.name.toLowerCase() === input || beach.name.toLowerCase().includes(input)) {
-                    // Process beach data
                     displayBeach(beach);
                     found = true;
-                    return; // Exit the loop once a beach is found
+                    break; // Exit the loop once a beach is found
                 }
-            });
+            }
         }
 
         // If no match is found
@@ -72,22 +71,32 @@ function searchPlace() {
 }
 
 function displayCity(city) {
-    resultDiv.innerHTML += `<img src="${city.imageUrl}" alt="${city.name} Image">`;
-    resultDiv.innerHTML += `<h2>${city.name}</h2>`;
-    resultDiv.innerHTML += `<p>${city.description}</p>`;
+    resultDiv.innerHTML += `
+        <div class="result-item">
+            <img src="${city.imageUrl}" alt="${city.name} Image" class="result-image">
+            <h2 class="result-title">${city.name}</h2>
+            <p class="result-description">${city.description}</p>
+        </div>`;
 }
 
 function displayTemple(temple) {
-    resultDiv.innerHTML += `<img src="${temple.imageUrl}" alt="${temple.name} Image">`;
-    resultDiv.innerHTML += `<h2>${temple.name}</h2>`;
-    resultDiv.innerHTML += `<p>${temple.description}</p>`;
+    resultDiv.innerHTML += `
+        <div class="result-item">
+            <img src="${temple.imageUrl}" alt="${temple.name} Image" class="result-image">
+            <h2 class="result-title">${temple.name}</h2>
+            <p class="result-description">${temple.description}</p>
+        </div>`;
 }
 
 function displayBeach(beach) {
-    resultDiv.innerHTML += `<img src="${beach.imageUrl}" alt="${beach.name} Image">`;
-    resultDiv.innerHTML += `<h2>${beach.name}</h2>`;
-    resultDiv.innerHTML += `<p>${beach.description}</p>`;
+    resultDiv.innerHTML += `
+        <div class="result-item">
+            <img src="${beach.imageUrl}" alt="${beach.name} Image" class="result-image">
+            <h2 class="result-title">${beach.name}</h2>
+            <p class="result-description">${beach.description}</p>
+        </div>`;
 }
+
 
 function clearResults() {
     resultDiv.innerHTML = '';
