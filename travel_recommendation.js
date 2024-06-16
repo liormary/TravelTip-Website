@@ -9,6 +9,7 @@ let displayedTemples = [];
 let displayedBeaches = [];
 
 function searchPlace() {
+    clearResults();
     console.log('Search button clicked'); // Debugging line
     resultDiv.innerHTML = '';
     fetch('travel_recommendation_api.json')
