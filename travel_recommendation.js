@@ -32,7 +32,7 @@ function searchPlace() {
             }
         } else if (input === "city" || input === "cities") {
             found = true;
-            if (!displayedCities.length) {
+            if (!displayedCities.includes(city.name.toLowerCase())) {
                 data.countries.forEach(country => {
                     country.cities.forEach(city => {
                         displayCity(city);
@@ -42,7 +42,7 @@ function searchPlace() {
             }
         } else if (input === "temple" || input === "temples") {
             found = true;
-            if (!displayedTemples.length) {
+            if (!displayedTemples.includes(temple.name.toLowerCase())) {
                 data.temples.forEach(temple => {
                     displayTemple(temple);
                     displayedTemples.push(temple.name.toLowerCase());
@@ -50,7 +50,7 @@ function searchPlace() {
             }
         } else if (input === "beach" || input === "beaches") {
             found = true;
-            if (!displayedBeaches.length) {
+            if (!displayedBeaches.includes(beach.name.toLowerCase())) {
                 data.beaches.forEach(beach => {
                     displayBeach(beach);
                     displayedBeaches.push(beach.name.toLowerCase());
